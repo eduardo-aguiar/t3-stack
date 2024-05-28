@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { mock } from "node:test";
+import { db } from "~/server/db";
 
 const mocksUrls = [
   "https://utfs.io/f/e90fc876-fc60-4335-a398-5cdf841f0a0a-1jf2fa.webp",
@@ -13,7 +12,11 @@ const mockImages = mocksUrls.map((url, index) => ({
   url,
 }));
 
-export default function HomePage() {
+export default async function HomePage() {
+  const posts = await db.query.posts.findMany();
+
+  console.log(posts[0]?.name);
+
   return (
     <main>
       <div className="flex flex-wrap gap-2">
